@@ -37,10 +37,10 @@ function onStartTimer() {
 
     updateClockFace(timeComponents);
     if (
-      timeComponents.days === '00' &&
-      timeComponents.minutes === '00' &&
-      timeComponents.hours === '00' &&
-      timeComponents.seconds === '00'
+      timeComponents.days == 0 &&
+      timeComponents.minutes == 0 &&
+      timeComponents.hours == 0 &&
+      timeComponents.seconds == 0
     ) {
       clearInterval(intervalId);
     }
@@ -48,13 +48,22 @@ function onStartTimer() {
 }
 
 function updateClockFace(time) {
-  document.querySelector('[data-days]').textContent = time.days;
-  document.querySelector('[data-hours]').textContent = time.hours;
-  document.querySelector('[data-minutes]').textContent = time.minutes;
-  document.querySelector('[data-seconds]').textContent = time.seconds;
+  document.querySelector('[data-days]').textContent =
+    String(time.days).length < 2
+      ? addLeadingZero(time.days)
+      : String(time.days);
+  document.querySelector('[data-hours]').textContent = addLeadingZero(
+    time.hours
+  );
+  document.querySelector('[data-minutes]').textContent = addLeadingZero(
+    time.minutes
+  );
+  document.querySelector('[data-seconds]').textContent = addLeadingZero(
+    time.seconds
+  );
 }
 
-function pad(val) {
+function addLeadingZero(val) {
   return String(val).padStart(2, '0');
 }
 
@@ -65,15 +74,33 @@ function convertMs(ms) {
   const hour = minute * 60;
   const day = hour * 24;
 
-  // Remaining days\
-  const checkDay = Math.floor(ms / day);
-  const days = String(checkDay).length < 2 ? pad(checkDay) : String(checkDay);
+  // Remaining days
+  const days = Math.floor(ms / day);
   // Remaining hours
-  const hours = pad(Math.floor((ms % day) / hour));
+  const hours = Math.floor((ms % day) / hour);
   // Remaining minutes
-  const minutes = pad(Math.floor(((ms % day) % hour) / minute));
+  const minutes = Math.floor(((ms % day) % hour) / minute);
   // Remaining seconds
-  const seconds = pad(Math.floor((((ms % day) % hour) % minute) / second));
+  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
 
   return { days, hours, minutes, seconds };
 }
+// function convertMs(ms) {
+//   // Number of milliseconds per unit of time
+//   const second = 1000;
+//   const minute = second * 60;
+//   const hour = minute * 60;
+//   const day = hour * 24;
+
+//   // Remaining days\
+//   const checkDay = Math.floor(ms / day);
+//   const days = String(checkDay).length < 2 ? pad(checkDay) : String(checkDay);
+//   // Remaining hours
+//   const hours = pad(Math.floor((ms % day) / hour));
+//   // Remaining minutes
+//   const minutes = pad(Math.floor(((ms % day) % hour) / minute));
+//   // Remaining seconds
+//   const seconds = pad(Math.floor((((ms % day) % hour) % minute) / second));
+
+//   return { days, hours, minutes, seconds };
+// }
