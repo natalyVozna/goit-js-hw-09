@@ -6,6 +6,7 @@ const inputEl = document.querySelector('#datetime-picker');
 let startTime;
 
 startBtn.setAttribute('disabled', true);
+startBtn.addEventListener('click', onStartTimer);
 
 const options = {
   enableTime: true,
@@ -26,7 +27,6 @@ const options = {
 flatpickr('#datetime-picker', options);
 
 function onStartTimer() {
-  console.log('nStartT', startTime);
   startBtn.setAttribute('disabled', true);
   inputEl.setAttribute('disabled', true);
 
@@ -44,7 +44,6 @@ function onStartTimer() {
     ) {
       clearInterval(intervalId);
     }
-    console.log('timeComponents', timeComponents);
   }, 1000);
 }
 
@@ -78,5 +77,3 @@ function convertMs(ms) {
 
   return { days, hours, minutes, seconds };
 }
-
-startBtn.addEventListener('click', onStartTimer);
