@@ -1,5 +1,6 @@
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
 
 const startBtn = document.querySelector('button[data-start]');
 const inputEl = document.querySelector('#datetime-picker');
@@ -16,7 +17,8 @@ const options = {
   onClose(selectedDates) {
     startTime = selectedDates[0];
     if (selectedDates[0].getTime() < new Date().getTime()) {
-      window.alert('Please choose a date in the future');
+      Notify.warning('Please choose a date in the future');
+      //   window.alert('Please choose a date in the future');
       startBtn.setAttribute('disabled', true);
     } else {
       startBtn.removeAttribute('disabled');
@@ -85,22 +87,3 @@ function convertMs(ms) {
 
   return { days, hours, minutes, seconds };
 }
-// function convertMs(ms) {
-//   // Number of milliseconds per unit of time
-//   const second = 1000;
-//   const minute = second * 60;
-//   const hour = minute * 60;
-//   const day = hour * 24;
-
-//   // Remaining days\
-//   const checkDay = Math.floor(ms / day);
-//   const days = String(checkDay).length < 2 ? pad(checkDay) : String(checkDay);
-//   // Remaining hours
-//   const hours = pad(Math.floor((ms % day) / hour));
-//   // Remaining minutes
-//   const minutes = pad(Math.floor(((ms % day) % hour) / minute));
-//   // Remaining seconds
-//   const seconds = pad(Math.floor((((ms % day) % hour) % minute) / second));
-
-//   return { days, hours, minutes, seconds };
-// }
