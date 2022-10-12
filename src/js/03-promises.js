@@ -6,7 +6,6 @@ formEl.addEventListener('submit', handleSubmit);
 
 function handleSubmit(e) {
   e.preventDefault();
-
   const { delay, step, amount } = e.target.elements;
 
   let countDelay = +delay.value;

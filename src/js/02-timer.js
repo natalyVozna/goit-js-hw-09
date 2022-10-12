@@ -18,7 +18,6 @@ const options = {
     startTime = selectedDates[0];
     if (selectedDates[0].getTime() < new Date().getTime()) {
       Notify.warning('Please choose a date in the future');
-      //   window.alert('Please choose a date in the future');
       startBtn.setAttribute('disabled', true);
     } else {
       startBtn.removeAttribute('disabled');
@@ -38,31 +37,19 @@ function onStartTimer() {
     const timeComponents = convertMs(deltaTime);
 
     updateClockFace(timeComponents);
-    if (
-      timeComponents.days == 0 &&
-      timeComponents.minutes == 0 &&
-      timeComponents.hours == 0 &&
-      timeComponents.seconds == 0
-    ) {
+    if (Object.values(timeComponents).every(el => el == 0)) {
       clearInterval(intervalId);
     }
   }, 1000);
 }
 
 function updateClockFace(time) {
-  document.querySelector('[data-days]').textContent =
-    String(time.days).length < 2
-      ? addLeadingZero(time.days)
-      : String(time.days);
-  document.querySelector('[data-hours]').textContent = addLeadingZero(
-    time.hours
-  );
-  document.querySelector('[data-minutes]').textContent = addLeadingZero(
-    time.minutes
-  );
-  document.querySelector('[data-seconds]').textContent = addLeadingZero(
-    time.seconds
-  );
+  console.log(Object.keys(time));
+  Object.keys(time).forEach(el => {
+    document.querySelector(`[data-${el}]`).textContent = addLeadingZero(
+      time[el]
+    );
+  });
 }
 
 function addLeadingZero(val) {
