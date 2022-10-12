@@ -44,10 +44,9 @@ function onStartTimer() {
 }
 
 function updateClockFace(time) {
-  console.log(Object.keys(time));
-  Object.keys(time).forEach(el => {
-    document.querySelector(`[data-${el}]`).textContent = addLeadingZero(
-      time[el]
+  Object.keys(time).forEach(timeEl => {
+    document.querySelector(`[data-${timeEl}]`).textContent = addLeadingZero(
+      time[timeEl]
     );
   });
 }
